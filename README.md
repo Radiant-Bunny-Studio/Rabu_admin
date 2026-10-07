@@ -5,7 +5,7 @@ Radiant Bunny Studio株式会社のコーポレートサイト。GitHub Pagesで
 ## 構成
 - `index.html` トップ（ニュース最新3件・スタジオ紹介・事業内容・会社概要・お問い合わせ）
 - `news.html` ニュース一覧（すべての記事）
-- `career.html` 採用情報（募集職種・応募方法）
+- `career.html` 採用情報（いまは募集なし。TTSエンジニアの募集文はコミット bc00cf5 の版にある）
 - `privacy.html` プライバシーポリシー（App Storeのプライバシーポリシー URL）
 - `support.html` サポート・お問い合わせ（App Storeのサポート URL）
 - `404.html` / `CNAME` / `.nojekyll`

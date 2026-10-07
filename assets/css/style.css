@@ -58,73 +58,84 @@ a:hover { color: var(--bunny); }
   text-decoration: none; color: var(--moon);
   font-family: var(--font-latin); line-height: 1.05;
 }
+.site-header.is-overlay {
+  position: absolute; top: 0; left: 0; right: 0; z-index: 5;
+  background: linear-gradient(to bottom, rgba(16, 17, 74, .55), transparent);
+}
 .brand img { width: 42px; height: 42px; }
 .brand-name { display: flex; flex-direction: column; }
 .brand-name b { color: var(--bunny); font-weight: 800; font-size: 17px; letter-spacing: -0.01em; }
 .brand-name span { color: var(--moon); font-weight: 400; font-size: 15px; }
 .brand:hover { color: var(--moon); }
 
-.site-nav ul { list-style: none; margin: 0; padding: 0; display: flex; gap: clamp(14px, 3vw, 32px); }
+.site-nav ul { list-style: none; margin: 0; padding: 0; display: flex; align-items: center; gap: clamp(14px, 3vw, 32px); }
+.site-nav .nav-x { display: flex; align-items: center; padding: 6px 0; }
+.site-nav .nav-x:hover { color: var(--bunny); border-bottom-color: transparent; }
 .site-nav a {
-  color: var(--moon); text-decoration: none; font-size: 14px; font-weight: 500;
+  color: var(--moon); text-decoration: none; font-size: 14px; font-weight: 500; white-space: nowrap;
   padding: 6px 0; border-bottom: 2px solid transparent;
 }
 .site-nav a:hover, .site-nav a[aria-current="page"] { color: var(--moon); border-bottom-color: var(--bunny); }
 
 /* ---------- Hero ---------- */
-.hero {
-  position: relative; overflow: hidden;
-  background: var(--night);
-  color: var(--moon);
-  padding: clamp(56px, 9vw, 120px) 0 clamp(72px, 10vw, 140px);
-}
-/* starfield: same dot language as the logo */
-.hero::before {
-  content: ""; position: absolute; inset: 0; pointer-events: none;
-  background-image:
-    radial-gradient(circle, var(--sky) 0 3px, transparent 4px),
-    radial-gradient(circle, var(--sky) 0 2px, transparent 3px),
-    radial-gradient(circle, var(--moon) 0 1.5px, transparent 2.5px),
-    radial-gradient(circle, var(--sky) 0 4px, transparent 5px),
-    radial-gradient(circle, var(--moon) 0 1px, transparent 2px),
-    radial-gradient(circle, var(--sky) 0 2px, transparent 3px);
-  background-size: 10px 10px, 8px 8px, 6px 6px, 12px 12px, 4px 4px, 8px 8px;
-  background-repeat: no-repeat;
-  background-position: 4% 14%, 3% 82%, 34% 6%, 58% 92%, 52% 10%, 96% 88%;
-  opacity: .8;
-}
-.hero .wrap {
-  position: relative;
-  display: grid; grid-template-columns: minmax(0, 1.4fr) minmax(0, 0.6fr);
-  align-items: center; gap: clamp(24px, 5vw, 64px);
-}
-.hero-copy h1 {
-  margin: 0 0 28px;
-  font-family: "Noto Sans JP", "Hiragino Sans", "Yu Gothic", sans-serif;
-  font-weight: 800;
-  font-size: clamp(27px, 3vw, 40px);
-  line-height: 1.5;
-  letter-spacing: 0.01em;
-  color: var(--moon);
-}
-.hero-copy h1 .line { display: block; }
-.hero-copy h1 .line > span { display: inline-block; }
-.hero-copy h1 .line + .line { color: var(--bunny); }
-.hero-en {
-  margin: 0 0 20px; font-family: var(--font-latin);
-  font-weight: 600; font-size: clamp(16px, 1.6vw, 19px); color: var(--sky);
-}
-.hero-lead { margin: 0; max-width: 34em; color: #d9d9ee; font-size: 15px; }
+.hero { background: var(--night); color: var(--moon); }
 
-.hero-mark { justify-self: end; width: min(100%, 440px); }
-.hero-mark img { width: 100%; }
+/* Key art fills the width. The eyes sit at the image centre, so the copy
+   centred on top of it always lands on the eyes (as on the Vstar wiki). */
+.hero-art {
+  position: relative; overflow: hidden;
+  height: clamp(460px, 58vw, 86vh);
+}
+.hero-art img { width: 100%; height: 100%; object-fit: cover; object-position: 50% 50%; }
+.hero-art::after { /* fade the bottom into the night */
+  content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: 28%;
+  background: linear-gradient(to bottom, transparent, var(--night));
+}
+
+.hero-copy {
+  position: absolute; left: 50%; top: 50.5%; z-index: 1;
+  transform: translate(-50%, -50%);
+  width: max-content; max-width: calc(100% - 2 * var(--gutter));
+  display: flex; flex-direction: column; align-items: center;
+  text-align: center;
+}
+/* Each line is a solid navy bar laid across the eyes */
+.hero-copy .bar {
+  display: block; width: fit-content; margin: 0 auto;
+  background: var(--bunny); color: var(--night); padding: 2px clamp(10px, 0.45em, 22px);
+}
+.hero-copy .bar > span { display: inline-block; }
+.hero-copy h1 .bar { color: var(--moon); }
+/* Overlap by 1px so no hairline of the art shows between bars on fractional pixel edges */
+.hero-copy h1 .bar + .bar, .hero-copy .hero-en { margin-top: -1px; }
+.hero-copy h1 {
+  margin: 0;
+  font-family: "Noto Sans JP", "Hiragino Sans", "Yu Gothic", sans-serif;
+  /* no cap: grows with the art so the eyes stay covered; a little smaller on very narrow phones */
+  font-weight: 800; font-size: max(min(24px, 6.4vw), 3.4vw);
+  line-height: 1.28; letter-spacing: 0.01em; color: var(--moon);
+}
+/* Stagger the two lines off the centre axis: first to the left, second to the right */
+.hero-copy h1 .bar:nth-child(1) { transform: translateX(-0.9em); }
+.hero-copy h1 .bar:nth-child(2) { transform: translateX(0.9em); }
+.hero-en {
+  margin: 0; font-family: var(--font-latin);
+  font-weight: 700; font-size: max(13px, 1.5vw); line-height: 1.7;
+}
+
+.hero-lead {
+  margin: 0; padding: 8px 0 clamp(48px, 7vw, 88px);
+  max-width: 40em; color: var(--sky); font-size: 15px;
+}
 
 @media (prefers-reduced-motion: no-preference) {
-  .hero-mark img { animation: rise 1.4s cubic-bezier(.2,.7,.2,1) both .15s; }
-  @keyframes rise {
-    from { opacity: 0; transform: translateY(28px) rotate(-4deg); }
-    to   { opacity: 1; transform: none; }
-  }
+  .hero-art img { animation: settle 1.6s cubic-bezier(.2,.7,.2,1) both; }
+  .hero-copy .bar { animation: wipe .7s cubic-bezier(.6,0,.2,1) both; }
+  .hero-copy h1 .bar:nth-child(1) { animation-delay: .5s; }
+  .hero-copy h1 .bar:nth-child(2) { animation-delay: .65s; }
+  .hero-copy .hero-en { animation-delay: .8s; }
+  @keyframes settle { from { opacity: 0; transform: scale(1.05); } to { opacity: 1; transform: none; } }
+  @keyframes wipe { from { clip-path: inset(0 100% 0 0); } to { clip-path: inset(0 0 0 0); } }
 }
 
 /* ---------- Sections ---------- */
@@ -162,6 +173,29 @@ a:hover { color: var(--bunny); }
 .profile dt { font-weight: 700; font-size: 14px; color: var(--ink-soft); padding-right: 16px; }
 .profile dd { font-size: 15px; }
 .profile dd small { display: block; color: var(--ink-soft); font-size: 13px; }
+
+/* News: date + one line, divided by thin lines like the profile */
+.news-list { list-style: none; margin: 0; padding: 0; max-width: 820px; border-top: 1px solid var(--line); }
+.news-list li {
+  display: grid; grid-template-columns: 8em 1fr; gap: 16px;
+  padding: 18px 0; border-bottom: 1px solid var(--line);
+}
+.news-list time { font-family: var(--font-latin); font-weight: 600; font-size: 14px; color: var(--bunny-dark); line-height: 1.9; }
+.news-list p { margin: 0; font-size: 15px; }
+.doc .news-list { max-width: 820px; padding-left: 0; }
+.doc .news-list li + li { margin-top: 0; }
+.more-link { margin: 24px 0 0; font-size: 14px; font-weight: 700; }
+.more-link a::after { content: " →"; }
+
+/* Official SNS: a simple list of icon links */
+.section.sns { padding: clamp(48px, 7vw, 80px) 0; }
+.sns-list { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: 16px 32px; }
+.sns-list a {
+  display: inline-flex; align-items: center; gap: 10px;
+  color: var(--ink); text-decoration: none; font-weight: 700; font-size: 16px;
+}
+.sns-list .sns-handle { font-family: var(--font-latin); font-weight: 500; color: var(--ink-soft); }
+.sns-list a:hover, .sns-list a:hover .sns-handle { color: var(--bunny); }
 
 /* Contact band */
 .contact-band { background: var(--night); color: var(--moon); }
@@ -203,6 +237,19 @@ a:hover { color: var(--bunny); }
 }
 .doc .contact-box p { margin: 0; }
 
+/* ---------- Career ---------- */
+.career .wrap > * { max-width: 820px; }
+.career-lead { font-size: clamp(16px, 1.8vw, 19px) !important; font-weight: 500; margin: 0 0 20px; }
+.job { padding-top: 56px; }
+.doc .job h2, .doc .job-howto h2 { margin: 0 0 4px; font-size: clamp(20px, 2.2vw, 24px); }
+.job-en { margin: 0 0 16px; font-family: var(--font-latin); font-weight: 600; font-size: 14px; color: var(--bunny-dark); }
+.job-terms { margin-top: 24px; }
+.job-terms dd ul { margin: 0; padding-left: 1.2em; }
+.job-terms dd li { font-size: 15px; }
+.job-terms dd li + li { margin-top: 2px; }
+.job-apply { margin: 28px 0 0; }
+.job-howto { padding-top: 64px; }
+
 /* ---------- Footer ---------- */
 .site-footer { background: var(--night-deep); color: #b9b9d8; font-size: 13px; }
 .site-footer .wrap {
@@ -216,15 +263,18 @@ a:hover { color: var(--bunny); }
 
 /* ---------- Responsive ---------- */
 @media (max-width: 820px) {
-  .hero .wrap { grid-template-columns: 1fr; }
-  .hero-mark { order: -1; justify-self: start; width: 200px; }
   .domains { grid-template-columns: 1fr; gap: 28px; }
   .domains li, .domains li:first-child { padding: 4px 0 4px 20px; }
   .profile { grid-template-columns: 1fr; }
   .profile dt { padding-bottom: 0; border-bottom: 0; }
   .profile dd { padding-top: 4px; }
+  .news-list li { grid-template-columns: 1fr; gap: 2px; }
 }
 @media (max-width: 560px) {
   .site-header .wrap { flex-direction: column; align-items: flex-start; gap: 8px; padding-top: 14px; padding-bottom: 10px; }
   .brand-name b { font-size: 15px; }
+}
+@media (max-width: 360px) {
+  .site-nav ul { gap: 12px; }
+  .site-nav a { font-size: 13px; }
 }

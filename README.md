@@ -10,6 +10,9 @@ Radiant Bunny Studio株式会社のコーポレートサイト。GitHub Pagesで
 - `support.html` サポート・お問い合わせ（App Storeのサポート URL）
 - `404.html` / `CNAME` / `.nojekyll`
 - `assets/css/style.css` 共通スタイル、`assets/img/` ロゴ類
+- `assets/img/google/` Google Workspace 用（プロフィール画像・管理コンソールのロゴ・Gmail署名ロゴ）
+
+ブランドカラーはピンク `#E6204D` と黒 `#040000`（名刺と同じ）。白地の小さい文字リンクだけ、コントラスト確保のため濃いピンク `#C41A40` を使う。
 
 ヘッダー・フッターは各HTMLに直接書いてある。メニューを変えるときは6ファイルすべて直す。サポートはヘッダーのメニューには出さず、フッターからだけリンクする（App Store のサポート URL として残す）。
 

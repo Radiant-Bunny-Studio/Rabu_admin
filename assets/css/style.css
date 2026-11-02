@@ -1,15 +1,16 @@
 /* Radiant Bunny Studio — brand tokens taken from the logo */
 :root {
-  --night: #18195a;      /* logo navy */
-  --night-deep: #10114a;
-  --bunny: #f15e11;      /* logo orange */
-  --bunny-dark: #c8480a;
-  --sky: #5ea9d3;        /* logo ring blue */
-  --moon: #f8f2e4;       /* logo cream */
+  --night: #040000;      /* logo black */
+  --night-deep: #040000;
+  --bunny: #e6204d;      /* logo pink */
+  --bunny-dark: #c41a40; /* pink for small text on white (AA contrast) */
+  --mist: #f6f2f2;       /* soft panel on white */
+  --on-dark: #ffffff;    /* text on black */
+  --on-dark-soft: #cfc9c9;
   --paper: #ffffff;
-  --ink: #18195a;
-  --ink-soft: #4a4b7c;
-  --line: #dcdcea;
+  --ink: #040000;
+  --ink-soft: #5a5353;
+  --line: #e8e3e3;
 
   --font-latin: "Montserrat", system-ui, sans-serif;
   --font-jp: "Noto Sans JP", "Hiragino Sans", "Hiragino Kaku Gothic ProN", "Yu Gothic", "Meiryo", sans-serif;
@@ -37,48 +38,48 @@ img { max-width: 100%; height: auto; display: block; }
 a { color: var(--bunny-dark); text-underline-offset: 3px; }
 a:hover { color: var(--bunny); }
 
-:focus-visible { outline: 3px solid var(--sky); outline-offset: 3px; border-radius: 4px; }
+:focus-visible { outline: 3px solid var(--bunny); outline-offset: 3px; border-radius: 4px; }
 
 .wrap { width: 100%; max-width: var(--wrap); margin: 0 auto; padding: 0 var(--gutter); }
 
 .skip {
   position: absolute; left: -9999px; top: 8px;
-  background: var(--moon); color: var(--night); padding: 8px 14px; z-index: 10;
+  background: var(--paper); color: var(--ink); padding: 8px 14px; z-index: 10;
 }
 .skip:focus { left: 8px; }
 
 /* ---------- Header ---------- */
-.site-header { background: var(--night); color: var(--moon); }
+/* White bar like the business card, so the full-colour logo sits on white */
+.site-header { background: var(--paper); color: var(--ink); border-bottom: 1px solid var(--line); }
 .site-header .wrap {
   display: flex; align-items: center; justify-content: space-between;
   gap: 24px; min-height: 72px;
 }
-.brand {
-  display: flex; align-items: center; gap: 12px;
-  text-decoration: none; color: var(--moon);
-  font-family: var(--font-latin); line-height: 1.05;
-}
+/* Top page: the header sits on the key art, with a white shade fading down from the top */
 .site-header.is-overlay {
   position: absolute; top: 0; left: 0; right: 0; z-index: 5;
-  background: linear-gradient(to bottom, rgba(16, 17, 74, .55), transparent);
+  background: none; border-bottom: 0; isolation: isolate;
 }
-.brand img { width: 42px; height: 42px; }
-.brand-name { display: flex; flex-direction: column; }
-.brand-name b { color: var(--bunny); font-weight: 800; font-size: 17px; letter-spacing: -0.01em; }
-.brand-name span { color: var(--moon); font-weight: 400; font-size: 15px; }
-.brand:hover { color: var(--moon); }
+.site-header.is-overlay::before {
+  content: ""; position: absolute; inset: 0 0 -72px 0; z-index: -1; pointer-events: none;
+  background: linear-gradient(to bottom,
+    rgba(255, 255, 255, .78) 0%, rgba(255, 255, 255, .6) 40%,
+    rgba(255, 255, 255, .25) 70%, rgba(255, 255, 255, 0) 100%);
+}
+.brand { display: flex; align-items: center; text-decoration: none; }
+.brand img { width: auto; height: 36px; }
 
 .site-nav ul { list-style: none; margin: 0; padding: 0; display: flex; align-items: center; gap: clamp(14px, 3vw, 32px); }
 .site-nav .nav-x { display: flex; align-items: center; padding: 6px 0; }
 .site-nav .nav-x:hover { color: var(--bunny); border-bottom-color: transparent; }
 .site-nav a {
-  color: var(--moon); text-decoration: none; font-size: 14px; font-weight: 500; white-space: nowrap;
+  color: var(--ink); text-decoration: none; font-size: 14px; font-weight: 500; white-space: nowrap;
   padding: 6px 0; border-bottom: 2px solid transparent;
 }
-.site-nav a:hover, .site-nav a[aria-current="page"] { color: var(--moon); border-bottom-color: var(--bunny); }
+.site-nav a:hover, .site-nav a[aria-current="page"] { color: var(--ink); border-bottom-color: var(--bunny); }
 
 /* ---------- Hero ---------- */
-.hero { background: var(--night); color: var(--moon); }
+.hero { background: var(--night); color: var(--on-dark); }
 
 /* Key art fills the width. The eyes sit at the image centre, so the copy
    centred on top of it always lands on the eyes (as on the Vstar wiki). */
@@ -99,13 +100,13 @@ a:hover { color: var(--bunny); }
   display: flex; flex-direction: column; align-items: center;
   text-align: center;
 }
-/* Each line is a solid navy bar laid across the eyes */
+/* Each line is a solid pink bar laid across the eyes */
 .hero-copy .bar {
   display: block; width: fit-content; margin: 0 auto;
   background: var(--bunny); color: var(--night); padding: 2px clamp(10px, 0.45em, 22px);
 }
 .hero-copy .bar > span { display: inline-block; }
-.hero-copy h1 .bar { color: var(--moon); }
+.hero-copy h1 .bar { color: var(--on-dark); }
 /* Overlap by 1px so no hairline of the art shows between bars on fractional pixel edges */
 .hero-copy h1 .bar + .bar, .hero-copy .hero-en { margin-top: -1px; }
 .hero-copy h1 {
@@ -113,7 +114,7 @@ a:hover { color: var(--bunny); }
   font-family: "Noto Sans JP", "Hiragino Sans", "Yu Gothic", sans-serif;
   /* no cap: grows with the art so the eyes stay covered; a little smaller on very narrow phones */
   font-weight: 800; font-size: max(min(24px, 6.4vw), 3.4vw);
-  line-height: 1.28; letter-spacing: 0.01em; color: var(--moon);
+  line-height: 1.28; letter-spacing: 0.01em; color: var(--on-dark);
 }
 /* Stagger the two lines off the centre axis: first to the left, second to the right */
 .hero-copy h1 .bar:nth-child(1) { transform: translateX(-0.9em); }
@@ -125,7 +126,7 @@ a:hover { color: var(--bunny); }
 
 .hero-lead {
   margin: 0; padding: 8px 0 clamp(48px, 7vw, 88px);
-  max-width: 40em; color: var(--sky); font-size: 15px;
+  max-width: 40em; color: var(--on-dark-soft); font-size: 15px;
 }
 
 @media (prefers-reduced-motion: no-preference) {
@@ -156,12 +157,12 @@ a:hover { color: var(--bunny); }
 }
 .statement + p { max-width: 38em; color: var(--ink-soft); margin-top: 24px; }
 
-/* What we make: three columns divided by thin sky lines, no cards */
+/* What we make: three columns divided by thin pink lines, no cards */
 .domains {
   list-style: none; margin: 0; padding: 0;
   display: grid; grid-template-columns: repeat(3, 1fr);
 }
-.domains li { padding: 8px 28px 8px 28px; border-left: 2px solid var(--sky); }
+.domains li { padding: 8px 28px 8px 28px; border-left: 2px solid var(--bunny); }
 .domains li:first-child { padding-left: 24px; }
 .domains h3 { margin: 0 0 4px; font-size: 18px; font-weight: 700; line-height: 1.5; }
 .domains .en { margin: 0 0 12px; font-family: var(--font-latin); font-size: 13px; font-weight: 600; color: var(--bunny-dark); }
@@ -198,13 +199,13 @@ a:hover { color: var(--bunny); }
 .sns-list a:hover, .sns-list a:hover .sns-handle { color: var(--bunny); }
 
 /* Contact band */
-.contact-band { background: var(--night); color: var(--moon); }
+.contact-band { background: var(--night); color: var(--on-dark); }
 .contact-band .wrap {
   display: flex; align-items: center; justify-content: space-between; gap: 32px; flex-wrap: wrap;
   padding-top: clamp(48px, 7vw, 80px); padding-bottom: clamp(48px, 7vw, 80px);
 }
 .contact-band h2 { margin: 0 0 8px; font-size: clamp(22px, 2.4vw, 28px); font-weight: 800; }
-.contact-band p { margin: 0; color: #d9d9ee; max-width: 32em; }
+.contact-band p { margin: 0; color: var(--on-dark-soft); max-width: 32em; }
 
 .button {
   display: inline-block; text-decoration: none;
@@ -216,9 +217,9 @@ a:hover { color: var(--bunny); }
 .button:hover { background: var(--bunny-dark); color: #fff; }
 
 /* ---------- Document pages (privacy / support) ---------- */
-.page-head { background: var(--night); color: var(--moon); padding: clamp(40px, 6vw, 72px) 0; }
+.page-head { background: var(--night); color: var(--on-dark); padding: clamp(40px, 6vw, 72px) 0; }
 .page-head h1 { margin: 0; font-size: clamp(26px, 3.4vw, 40px); font-weight: 800; line-height: 1.35; }
-.page-head p { margin: 8px 0 0; color: var(--sky); font-family: var(--font-latin); font-weight: 600; }
+.page-head p { margin: 8px 0 0; color: var(--bunny); font-family: var(--font-latin); font-weight: 600; }
 
 .doc { padding: clamp(48px, 7vw, 88px) 0; }
 .doc .wrap > * { max-width: 44em; }
@@ -233,7 +234,7 @@ a:hover { color: var(--bunny); }
 .doc .meta { margin-top: 48px; color: var(--ink-soft); font-size: 14px; }
 .doc .contact-box {
   margin: 20px 0; padding: 20px 24px;
-  background: var(--moon); border-radius: 12px;
+  background: var(--mist); border-radius: 12px;
 }
 .doc .contact-box p { margin: 0; }
 
@@ -251,14 +252,14 @@ a:hover { color: var(--bunny); }
 .job-howto { padding-top: 64px; }
 
 /* ---------- Footer ---------- */
-.site-footer { background: var(--night-deep); color: #b9b9d8; font-size: 13px; }
+.site-footer { background: var(--night-deep); color: #a8a2a2; font-size: 13px; border-top: 1px solid #2a2424; }
 .site-footer .wrap {
   display: flex; justify-content: space-between; align-items: center; gap: 16px; flex-wrap: wrap;
   padding-top: 28px; padding-bottom: 28px;
 }
 .site-footer ul { list-style: none; margin: 0; padding: 0; display: flex; gap: 24px; flex-wrap: wrap; }
-.site-footer a { color: #d9d9ee; text-decoration: none; }
-.site-footer a:hover { color: var(--moon); text-decoration: underline; }
+.site-footer a { color: var(--on-dark-soft); text-decoration: none; }
+.site-footer a:hover { color: var(--on-dark); text-decoration: underline; }
 .site-footer small { font-family: var(--font-latin); font-size: 12px; }
 
 /* ---------- Responsive ---------- */
@@ -272,7 +273,7 @@ a:hover { color: var(--bunny); }
 }
 @media (max-width: 560px) {
   .site-header .wrap { flex-direction: column; align-items: flex-start; gap: 8px; padding-top: 14px; padding-bottom: 10px; }
-  .brand-name b { font-size: 15px; }
+  .brand img { height: 32px; }
 }
 @media (max-width: 360px) {
   .site-nav ul { gap: 12px; }
